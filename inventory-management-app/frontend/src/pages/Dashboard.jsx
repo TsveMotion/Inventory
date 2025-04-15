@@ -14,23 +14,24 @@ import {
 } from "chart.js";
 import { format, subMonths, isWithinInterval, parseISO } from "date-fns";
 import { FiBox, FiTrendingUp, FiShoppingCart, FiSearch, FiPackage, FiUsers, FiPercent, FiDollarSign } from "react-icons/fi";
+import { API_URL } from "../config";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Tooltip, Legend, TimeScale);
 
 // Dummy fetch functions (replace with real API calls)
 const fetchInventory = async () => {
-  const res = await fetch("http://localhost:8000/inventory");
+  const res = await fetch(`${API_URL}/inventory`);
   return res.ok ? res.json() : [];
 };
 const fetchSales = async () => {
   // Example: fetch all inventory and treat items with sale_price > 0 as sales
-  const res = await fetch("http://localhost:8000/inventory");
+  const res = await fetch(`${API_URL}/inventory`);
   if (!res.ok) return [];
   const data = await res.json();
   return data.filter(item => item.sale_price && item.sale_price > 0);
 };
 const fetchVinted = async () => {
-  const res = await fetch("http://localhost:8000/vinted-bot-search?keywords=");
+  const res = await fetch(`${API_URL}/vinted-bot-search?keywords=`);
   return res.ok ? res.json() : { products: [] };
 };
 

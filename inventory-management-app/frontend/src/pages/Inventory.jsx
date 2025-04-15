@@ -4,6 +4,7 @@ import PrintBarcodeModal from "../components/PrintBarcodeModal";
 import PrintInvoiceModal from "../components/PrintInvoiceModal";
 import InvoiceInfoModal from "../components/InvoiceInfoModal";
 import BarcodeScanner from "../components/BarcodeScanner";
+import { API_URL } from "../config";
 
 const initialForm = {
   item_name: "",
@@ -34,7 +35,7 @@ export default function Inventory() {
 
   const fetchItems = () => {
     setLoading(true);
-    fetch("http://localhost:8000/inventory/")
+    fetch(`${API_URL}/inventory/`)
       .then((res) => res.json())
       .then((data) => {
         setItems(data);
@@ -56,7 +57,7 @@ export default function Inventory() {
     setAdding(true);
     setError("");
     try {
-      const res = await fetch("http://localhost:8000/inventory/", {
+      const res = await fetch(`${API_URL}/inventory/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -78,7 +79,7 @@ export default function Inventory() {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this item?")) return;
-    await fetch(`http://localhost:8000/inventory/${id}`, {
+    await fetch(`${API_URL}/inventory/${id}`, {
       method: "DELETE",
     });
     fetchItems();
@@ -90,7 +91,7 @@ export default function Inventory() {
     setEditModalOpen(true);
   };
   const handleEditSave = async (updatedItem) => {
-    await fetch(`http://localhost:8000/inventory/${updatedItem.id}`, {
+    await fetch(`${API_URL}/inventory/${updatedItem.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedItem),

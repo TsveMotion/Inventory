@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FiBarChart2, FiCheckCircle, FiAlertCircle, FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { API_URL } from "../config";
 
 export default function ScanPage() {
   const [mode, setMode] = useState("in"); // "in" or "out"
@@ -20,7 +21,7 @@ export default function ScanPage() {
     if (!barcode) return;
     setLoading(true);
     try {
-      let url = `http://localhost:8000/inventory/barcode/${barcode}`;
+      let url = `${API_URL}/inventory/barcode/${barcode}`;
       let res = await fetch(url);
       if (res.ok) {
         let data = await res.json();
@@ -44,7 +45,7 @@ export default function ScanPage() {
     setLoading(true);
     setMessage("");
     try {
-      let url = "http://localhost:8000/inventory/scan";
+      let url = `${API_URL}/inventory/scan`;
       let res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FiSearch, FiBox } from "react-icons/fi";
+import { API_URL } from "../config";
 
 // Constants for rack layout
 const ROWS = ["A", "B", "C", "D", "E"];
@@ -151,7 +152,7 @@ export default function FindItemRack({ inventory, setInventory }) {
                         <button
                           className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded text-xs font-semibold"
                           onClick={async () => {
-                            await fetch(`http://localhost:8000/inventory/scan`, {
+                            await fetch(`${API_URL}/inventory/scan`, {
                               method: "POST",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify({ barcode: i.barcode, quantity: 1, mode: "in" })
@@ -162,7 +163,7 @@ export default function FindItemRack({ inventory, setInventory }) {
                         <button
                           className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs font-semibold"
                           onClick={async () => {
-                            await fetch(`http://localhost:8000/inventory/scan`, {
+                            await fetch(`${API_URL}/inventory/scan`, {
                               method: "POST",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify({ barcode: i.barcode, quantity: 1, mode: "out" })

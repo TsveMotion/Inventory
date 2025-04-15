@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { API_URL } from "../config";
 
 export default function VintedBot() {
   const [products, setProducts] = useState([]);
@@ -14,7 +15,7 @@ export default function VintedBot() {
     setError("");
     try {
       if (!keywords) throw new Error("Please enter keywords.");
-      let url = `http://localhost:8000/vinted-bot-search?keywords=${encodeURIComponent(keywords)}`;
+      let url = `${API_URL}/vinted-bot-search?keywords=${encodeURIComponent(keywords)}`;
       if (minPrice) url += `&min_price=${encodeURIComponent(minPrice)}`;
       if (maxPrice) url += `&max_price=${encodeURIComponent(maxPrice)}`;
       if (sort) url += `&sort=${encodeURIComponent(sort)}`;
