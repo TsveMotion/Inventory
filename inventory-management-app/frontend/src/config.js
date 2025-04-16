@@ -1,3 +1,3 @@
 // config.js
-const API_URL = "http://10.0.0.158:8000";
+const API_URL = "https://apiflintor.duckdns.org";
 export default API_URL;

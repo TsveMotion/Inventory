@@ -19,13 +19,11 @@ import API_URL from "../config";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Tooltip, Legend, TimeScale, Filler);
 
-// Dummy fetch functions (replace with real API calls)
 const fetchInventory = async () => {
   const res = await fetch(`${API_URL}/inventory`);
   return res.ok ? res.json() : [];
 };
 const fetchSales = async () => {
-  // Example: fetch all inventory and treat items with sale_price > 0 as sales
   const res = await fetch(`${API_URL}/inventory`);
   if (!res.ok) return [];
   const data = await res.json();
