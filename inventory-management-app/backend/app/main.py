@@ -10,7 +10,7 @@ app = FastAPI()
 # Allow frontend to access backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://10.0.0.158", "http://localhost", "http://127.0.0.1"],  # Only allow your frontend's domain or IP
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
