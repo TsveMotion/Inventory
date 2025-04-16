@@ -3,7 +3,6 @@ from threading import Thread
 import time
 from typing import List, Dict
 from datetime import datetime, timedelta
-from vinted_scraper import VintedScraper
 import json
 import os
 
