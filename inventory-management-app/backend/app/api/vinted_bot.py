@@ -4,7 +4,7 @@ from typing import List, Optional
 from bs4 import BeautifulSoup
 import sqlite3
 import os
-from vinted_scraper import VintedScraper
+from .vinted_scraper import VintedScraper
 
 router = APIRouter()
 
