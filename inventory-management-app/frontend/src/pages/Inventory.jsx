@@ -4,7 +4,7 @@ import PrintBarcodeModal from "../components/PrintBarcodeModal";
 import PrintInvoiceModal from "../components/PrintInvoiceModal";
 import InvoiceInfoModal from "../components/InvoiceInfoModal";
 import BarcodeScanner from "../components/BarcodeScanner";
-import { API_URL } from "../config";
+import API_URL from "../config";
 
 const initialForm = {
   item_name: "",

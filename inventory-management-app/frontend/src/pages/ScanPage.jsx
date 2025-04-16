@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FiBarChart2, FiCheckCircle, FiAlertCircle, FiChevronDown, FiChevronUp } from "react-icons/fi";
-import { API_URL } from "../config";
+import API_URL from "../config";
 
 export default function ScanPage() {
   const [mode, setMode] = useState("in"); // "in" or "out"

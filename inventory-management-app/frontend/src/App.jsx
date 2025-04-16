@@ -4,9 +4,9 @@ import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Inventory from "./pages/Inventory";
 import ScanPage from "./pages/ScanPage";
-import VintedBot from "./pages/VintedBot";
 import FindItem from "./pages/FindItem";
 import Login from "./pages/Login";
+// import VintedBot from "./pages/VintedBot"; // Removed
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(() => !!localStorage.getItem("loggedIn"));
@@ -30,8 +30,8 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/scan" element={<ScanPage />} />
-            <Route path="/vinted-bot" element={<VintedBot />} />
             <Route path="/find-item" element={<FindItem />} />
+            {/* <Route path="/vinted-bot" element={<VintedBot />} /> */}
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </main>

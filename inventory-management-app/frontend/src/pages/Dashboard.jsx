@@ -11,12 +11,13 @@ import {
   Tooltip,
   Legend,
   TimeScale,
+  Filler,
 } from "chart.js";
 import { format, subMonths, isWithinInterval, parseISO } from "date-fns";
 import { FiBox, FiTrendingUp, FiShoppingCart, FiSearch, FiPackage, FiUsers, FiPercent, FiDollarSign } from "react-icons/fi";
-import { API_URL } from "../config";
+import API_URL from "../config";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Tooltip, Legend, TimeScale);
+ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, ArcElement, Tooltip, Legend, TimeScale, Filler);
 
 // Dummy fetch functions (replace with real API calls)
 const fetchInventory = async () => {
@@ -30,22 +31,16 @@ const fetchSales = async () => {
   const data = await res.json();
   return data.filter(item => item.sale_price && item.sale_price > 0);
 };
-const fetchVinted = async () => {
-  const res = await fetch(`${API_URL}/vinted-bot-search?keywords=`);
-  return res.ok ? res.json() : { products: [] };
-};
 
 export default function Dashboard() {
   const [inventory, setInventory] = useState([]);
   const [sales, setSales] = useState([]);
-  const [vinted, setVinted] = useState([]);
   const [dateRange, setDateRange] = useState({ from: format(subMonths(new Date(), 1), "yyyy-MM-dd"), to: format(new Date(), "yyyy-MM-dd") });
   const [filteredSales, setFilteredSales] = useState([]);
 
   useEffect(() => {
     fetchInventory().then(setInventory);
     fetchSales().then(setSales);
-    fetchVinted().then(data => setVinted(data.products || []));
   }, []);
 
   useEffect(() => {
@@ -72,12 +67,11 @@ export default function Dashboard() {
   const profitSum = filteredSales.reduce((acc, item) => acc + (item.profit || 0), 0);
   const totalSales = filteredSales.length;
   const inventoryCount = inventory.length;
-  const vintedCount = vinted.length;
 
   return (
     <div className="flex flex-col h-full w-full p-8 gap-6 overflow-hidden">
       {/* Top Cards */}
-      <div className="grid grid-cols-4 gap-6 mb-2">
+      <div className="grid grid-cols-3 gap-6 mb-2">
         <div className="bg-white rounded-xl shadow flex flex-col items-center justify-center p-6 min-w-[160px]">
           <FiBox className="text-3xl text-blue-500 mb-2" />
           <div className="text-2xl font-bold">{inventoryCount}</div>
@@ -92,11 +86,6 @@ export default function Dashboard() {
           <FiDollarSign className="text-3xl text-emerald-500 mb-2" />
           <div className="text-2xl font-bold">£{profitSum.toFixed(2)}</div>
           <div className="text-gray-500">Profit (Filtered)</div>
-        </div>
-        <div className="bg-white rounded-xl shadow flex flex-col items-center justify-center p-6 min-w-[160px]">
-          <FiPackage className="text-3xl text-purple-500 mb-2" />
-          <div className="text-2xl font-bold">{vintedCount}</div>
-          <div className="text-gray-500">Vinted Listings</div>
         </div>
       </div>
       {/* Date Filter */}
@@ -213,33 +202,13 @@ export default function Dashboard() {
             </table>
           </div>
         </div>
-        {/* Vinted Preview */}
-        <div className="bg-white rounded-xl shadow p-4 flex flex-col items-center justify-center">
-          <div className="font-bold mb-2 flex items-center gap-2"><FiUsers className="text-purple-500" /> Vinted Preview</div>
-          <div className="overflow-x-auto w-full max-h-40">
-            <table className="min-w-full text-sm">
-              <thead>
-                <tr>
-                  <th className="px-2 py-1">Title</th>
-                  <th className="px-2 py-1">Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                {vinted.slice(0, 5).map((p, idx) => (
-                  <tr key={idx}>
-                    <td className="px-2 py-1 truncate max-w-[120px]">{p.title}</td>
-                    <td className="px-2 py-1">£{p.price}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
         {/* Scan In/Out Preview */}
         <div className="bg-white rounded-xl shadow p-4 flex flex-col items-center justify-center">
           <div className="font-bold mb-2 flex items-center gap-2"><FiShoppingCart className="text-green-400" /> Scan In/Out Preview</div>
           <div className="text-gray-500 text-sm">Use the Scan In/Out tab to update inventory in real time!</div>
         </div>
+        {/* Empty Column */}
+        <div className="bg-white rounded-xl shadow p-4 flex flex-col items-center justify-center"></div>
       </div>
     </div>
   );

@@ -7,18 +7,11 @@ from app.api import vinted_bot
 
 app = FastAPI()
 
-# Allow frontend to access backend
+# Allow all origins (CORS)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://10.0.0.158:3000",  # Explicitly allow your frontend dev server
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://10.0.0.158",  # Keep existing for possible production
-        "http://localhost",
-        "http://127.0.0.1"
-    ],
-    allow_credentials=True,
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=False,  # Credentials cannot be used with allow_origins=["*"]
     allow_methods=["*"],
     allow_headers=["*"],
 )

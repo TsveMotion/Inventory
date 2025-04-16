@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FiHome, FiBox, FiSearch, FiBarChart2, FiShoppingCart, FiUsers, FiLogOut } from "react-icons/fi";
+import { FiHome, FiBox, FiSearch, FiBarChart2, FiShoppingCart, FiLogOut } from "react-icons/fi";
 import logo from "../assets/logo.png";
 
 const navItems = [
@@ -8,7 +8,6 @@ const navItems = [
   { name: "Inventory", path: "/inventory", icon: <FiBox /> },
   { name: "Find Item", path: "/find-item", icon: <FiSearch /> },
   { name: "Scan In // Scan Out", path: "/scan", icon: <FiShoppingCart /> },
-  { name: "Vinted Bot", path: "/vinted-bot", icon: <FiUsers /> },
 ];
 
 export default function Sidebar({ onLogout }) {

@@ -72,42 +72,7 @@ def vinted_bot_search(
         "Chrome/123.0.0.0 Safari/537.36"
     )
     scraper = VintedScraper("https://www.vinted.co.uk", agent=user_agent)
-    params = {"search_text": keywords}
-    if max_price:
-        params["price_to"] = int(max_price)
-    try:
-        items = scraper.search(params)
-    except Exception as e:
-        print(f"[VINTED BOT] vinted_scraper error: {e}")
-        return {"products": []}
-    products = []
-    for item in items:
-        print("[DEBUG] ITEM:", getattr(item, "__dict__", str(item)))
-        # Extract image URL from nested photo dict or photos list
-        image_url = None
-        # Try photo['url']
-        if hasattr(item, 'photo') and item.photo and isinstance(item.photo, dict) and 'url' in item.photo:
-            image_url = item.photo['url']
-        # Try photo['full_size_url'] for highest resolution
-        elif hasattr(item, 'photo') and item.photo and isinstance(item.photo, dict) and 'full_size_url' in item.photo:
-            image_url = item.photo['full_size_url']
-        # Try photos list
-        elif hasattr(item, 'photos') and item.photos and hasattr(item.photos[0], 'url'):
-            image_url = item.photos[0].url
-        if not image_url or not str(image_url).startswith("http"):
-            image_url = "https://via.placeholder.com/300x200?text=No+Image"
-        products.append({
-            "title": getattr(item, "title", ""),
-            "price": getattr(item, "price", 0),
-            "description": getattr(item, "description", ""),
-            "image_url": image_url,
-            "url": getattr(item, "url", None),
-            "created_at": getattr(item, "created_at", None)
-        })
-    # Filter by min_price if set
-    if min_price is not None:
-        products = [p for p in products if p.get("price", 0) >= min_price]
-    # Sorting
+    products = scraper.search_products(keywords, max_price=max_price, min_price=min_price)
     def safe_created_at(x):
         val = x.get("created_at")
         if val is None:

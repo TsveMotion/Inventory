@@ -36,6 +36,28 @@ def build_vinted_url(keywords: str, max_price: float = None):
         base += f"&price_to={int(max_price)}"
     return base
 
+class VintedScraper:
+    def __init__(self, base_url: str, agent: str = None):
+        self.base_url = base_url
+        self.session = requests.Session()
+        if agent:
+            self.session.headers["User-Agent"] = agent
+        else:
+            self.session.headers["User-Agent"] = "Mozilla/5.0 (compatible; VintedScraper/1.0)"
+
+    def search(self, params: dict) -> List[dict]:
+        # Dummy implementation: returns a static example item
+        # Replace with real scraping logic for production use
+        return [
+            {
+                "title": "Demo Vinted Item",
+                "price": 10.0,
+                "description": "This is a demo item scraped from Vinted.",
+                "photo": PLACEHOLDER_IMAGE,
+                "url": f"{self.base_url}/items/demo-item-1"
+            }
+        ]
+
 def scrape_vinted(keywords: str, max_price: float = None) -> List[dict]:
     scraper = VintedScraper("https://www.vinted.co.uk")
     params = {"search_text": keywords}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { API_URL } from "../config";
+import API_URL from "../config";
 import FindItemRack from "../components/FindItemRack";
 
 // Dummy fetch (replace with real API)

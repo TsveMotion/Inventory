@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FiSearch, FiBox } from "react-icons/fi";
-import { API_URL } from "../config";
+import API_URL from "../config";
 
 // Constants for rack layout
 const ROWS = ["A", "B", "C", "D", "E"];
